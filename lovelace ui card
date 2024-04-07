@@ -1,0 +1,44 @@
+type: custom:apexcharts-card
+graph_span: 24h
+span:
+  start: day
+stacked: true
+update_interval: 1min
+yaxis:
+  - min: 0
+    max: 4500
+header:
+  show: true
+  title: Consumption
+all_series_config:
+  extend_to: now
+  stroke_width: 1
+  type: area
+  unit: W
+  opacity: 1
+  group_by:
+    func: avg
+    duration: 5m
+    fill: zero
+series:
+  - entity: sensor.funchal_pv_consumption
+    name: Solar consumption
+    color: CCE602
+    type: area
+    curve: smooth
+    stroke_width: 1
+    extend_to: now
+  - entity: sensor.sn_3015613563_battery_power_discharge_total
+    name: Battery
+    color: orange
+    type: area
+    curve: smooth
+    opacity: 1
+    stroke_width: 1
+    extend_to: now
+  - entity: sensor.sn_3015613563_metering_power_absorbed
+    name: Grid
+    color: red
+    type: area
+    curve: smooth
+    opacity: 1
