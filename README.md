@@ -1,4 +1,5 @@
 Home Assistant SMA Energy Graphs Replication
+
 This project aims to enhance the monitoring and visualization of energy data within Home Assistant by replicating the energy graphs from the SMA Sunny Portal. The motivation behind this endeavor stems from the limitations and inconsistencies observed in the original SMA graphs, which often fail to update promptly and lack certain desirable features.
 
 Utilizing the flexibility and power of Home Assistant, coupled with the Apex Charts integration via the HACS addon, we have successfully recreated the energy graphs with remarkable fidelity. These replicated graphs closely resemble their SMA counterparts while leveraging the extensive customization options and dynamic capabilities offered by Apex Charts.
