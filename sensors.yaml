@@ -1,0 +1,53 @@
+# Example sensors.yaml
+- platform: template
+  sensors:
+    funchal_grid_consumption:
+      friendly_name: "Funchal Grid Consumption"
+      unit_of_measurement: "W" 
+      value_template: >-
+        {{states('sensor.sn_3015613563_metering_power_absorbed') | float(0) | round(2)}}
+      device_class: energy
+      
+    funchal_grid_feedin:
+      friendly_name: "Funchal Grid Feedin"
+      unit_of_measurement: "W"
+      value_template: >-
+        {{ states('sensor.sn_3015613563_metering_active_power_feed_l1') | float(0) | round(2) 
+        + states('sensor.sn_3015613563_metering_active_power_feed_l2') | float(0) | round(2) 
+        + states('sensor.sn_3015613563_metering_active_power_feed_l3') | float(0) | round(2) }}
+      device_class: energy
+
+    funchal_pv_consumption:
+# power coming from PV -
+# - power going to battery 
+# - power going to grid
+# = amount consumed PV consumed by the house
+      friendly_name: "Funchal PV consumption"
+      unit_of_measurement: "W"
+      value_template: >
+        {{ max(0, states('sensor.sn_3015613563_pv_power') | float(0) | round(2) 
+          - states('sensor.sn_3015613563_metering_power_supplied') | float(0) | round(2) 
+          - states('sensor.sn_3015613563_battery_power_charge_total') | float(0) | round(2)) }}
+      device_class: energy
+
+
+
+    funchal_house_consumption:
+# power coming from PV 
+# - power going to battery 
+# - power going to grid
+# + power coming from to grid
+# + power coming for battery
+
+# = amount of power consumed by the house
+
+        friendly_name: "Funchal house consumption"
+        unit_of_measurement: "W"
+        value_template: >
+          {{ max(0,states('sensor.sn_3015613563_pv_power') | float(0) | round(2) 
+            + states('sensor.sn_3015613563_battery_power_discharge_total') | float(0) | round(2)
+            + states('sensor.sn_3015613563_metering_power_absorbed') | float(0) | round(2) 
+            - states('sensor.sn_3015613563_metering_power_supplied') | float(0) | round(2) 
+            - states('sensor.sn_3015613563_battery_power_charge_total') | float(0) | round(2) 
+          ) }}
+        device_class: energy 
